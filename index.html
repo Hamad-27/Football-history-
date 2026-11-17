@@ -1,1 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>THE FOOTBALL ATLAS — The World of Football</title>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+--black:#090909;
+--panel:#141414;
+--gold:#d8b56d;
+--gold2:#f0d99e;
+--white:#f5f1e8;
+--muted:#a9a39a;
+--line:#38332a;
+}
+
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+margin:0;
+background:var(--black);
+color:var(--white);
+font-family:'DM Sans',Arial,sans-serif;
+}
+
+a { color:inherit; text-decoration:none; }
+button { font:inherit; cursor:pointer; }
+
+header {
+height:76px;
+padding:0 5.5%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid #ffffff18;
+background:#090909ed;
+position:sticky;
+top:0;
+z-index:20;
+backdrop-filter:blur(15px);
+}
+
+.logo {
+font:800 25px 'Barlow Condensed';
+letter-spacing:2px;
+}
+
+.logo em {
+color:var(--gold);
+font-style:normal;
+}
+
+nav {
+display:flex;
+gap:27px;
+font-size:11px;
+letter-spacing:1.7px;
+text-transform:uppercase;
+color:#d8d1c5;
+}
+
+nav a:hover { color:var(--gold); }
+
+.menu {
+display:none;
+background:none;
+border:1px solid var(--line);
+color:var(--gold);
+padding:8px 12px;
+}
+
+.hero {
+min-height:590px;
+display:flex;
+align-items:flex-end;
+padding:90px 7% 75px;
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(90deg,#090909 0%,#090909d9 36%,#09090955 100%),
+linear-gradient(0deg,#090909 0%,transparent 42%),
+url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=2200&q=90')
+center 40%/cover;
+}
+
+.hero:after {
+content:"";
+position:absolute;
+inset:0;
+border-bottom:1px solid var(--line);
+pointer-events:none;
+}
+
+.hero-inner {
+position:relative;
+z-index:1;
+max-width:760px;
+}
+
+.kicker {
+color:var(--gold);
+font-size:10px;
+letter-spacing:4px;
+text-transform:uppercase;
+font-weight:700;
+}
+
+.hero h1 {
+font:900 clamp(62px,10vw,126px)/.82 'Barlow Condensed';
+letter-spacing:-2px;
+margin:23px 0;
+text-transform:uppercase;
+}
+
+.hero h1 span { color:var(--gold); }
+
+.hero p {
+max-width:520px;
+color:#d0c9bd;
+line-height:1.8;
+font-size:14px;
+}
+
+.goldbtn {
+display:inline-block;
+margin-top:23px;
+padding:14px 22px;
+background:var(--gold);
+color:#111;
+font-size:10px;
+font-weight:800;
+letter-spacing:2px;
+text-transform:uppercase;
+border:0;
+}
+
+.goldbtn:hover { background:var(--gold2); }
+
+.ticker {
+border-bottom:1px solid var(--line);
+border-top:1px solid var(--line);
+padding:13px 5%;
+display:flex;
+justify-content:center;
+gap:38px;
+flex-wrap:wrap;
+color:var(--gold);
+font:700 12px 'Barlow Condensed';
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+main {
+max-width:1500px;
+margin:auto;
+padding:0 5.5%;
+}
+
+.section { padding:68px 0 12px; }
+
+.section-head {
+display:flex;
+justify-content:space-between;
+align-items:end;
+gap:15px;
+margin-bottom:23px;
+}
+
+.section-head h2 {
+font:800 clamp(34px,5vw,55px)/.95 'Barlow Condensed';
+text-transform:uppercase;
+margin:9px 0 0;
+}
+
+.section-head p {
+color:var(--muted);
+font-size:12px;
+max-width:430px;
+line-height:1.7;
+margin:0;
+}
+
+.league-strip {
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px;
+}
+
+.league {
+border:1px solid var(--line);
+background:linear-gradient(145deg,#201e19,#111);
+padding:20px 16px;
+min-height:122px;
+text-align:left;
+position:relative;
+overflow:hidden;
+color:var(--white);
+transition:.25s;
+}
+
+.league:after {
+content:"";
+position:absolute;
+width:90px;
+height:90px;
+border:1px solid #d8b56d28;
+border-radius:50%;
+right:-35px;
+bottom:-45px;
+}
+
+.league:hover,
+.league.active {
+border-color:var(--gold);
+background:#292319;
+transform:translateY(-3px);
+}
+
+.league small {
+display:block;
+color:var(--gold);
+font-size:9px;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.league strong {
+display:block;
+font:700 23px 'Barlow Condensed';
+margin-top:11px;
+text-transform:uppercase;
+}
+
+.league span {
+display:block;
+color:var(--muted);
+font-size:10px;
+margin-top:4px;
+}
+
+.controls {
+display:flex;
+gap:10px;
+align-items:center;
+flex-wrap:wrap;
+margin:20px 0;
+}
+
+.search {
+background:#111;
+border:1px solid var(--line);
+padding:14px 16px;
+color:white;
+min-width:230px;
+flex:1;
+outline:none;
+}
+
+.search:focus { border-color:var(--gold); }
+
+.filter {
+background:#111;
+color:var(--gold);
+border:1px solid var(--line);
+padding:13px 15px;
+font-size:10px;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.club-grid {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px;
+}
+
+.club-card {
+min-height:270px;
+position:relative;
+border:1px solid var(--line);
+overflow:hidden;
+background:#151515;
+text-align:left;
+color:white;
+padding:0;
+transition:.3s;
+}
+
+.club-card:hover {
+border-color:var(--gold);
+transform:translateY(-5px);
+}
+
+.club-photo {
+height:145px;
+background-size:cover;
+background-position:center;
+filter:saturate(.72);
+transition:.4s;
+}
+
+.club-card:hover .club-photo {
+filter:saturate(1);
+transform:scale(1.025);
+}
+
+.club-info {
+padding:16px;
+position:relative;
+background:linear-gradient(0deg,#151515,#151515);
+}
+
+.crest {
+font:800 25px 'Barlow Condensed';
+color:var(--gold);
+border:1px solid var(--gold);
+width:42px;
+height:42px;
+display:grid;
+place-items:center;
+background:#101010;
+position:absolute;
+top:-22px;
+right:16px;
+}
+
+.club-info small {
+color:var(--gold);
+font-size:9px;
+letter-spacing:1.5px;
+text-transform:uppercase;
+}
+
+.club-info h3 {
+font:700 24px 'Barlow Condensed';
+text-transform:uppercase;
+margin:8px 0 5px;
+}
+
+.club-info p {
+color:var(--muted);
+font-size:10px;
+margin:0;
+}
+
+.feature {
+margin:65px 0 10px;
+display:grid;
+grid-template-columns:1.1fr .9fr;
+background:#151411;
+border:1px solid var(--line);
+}
+
+.feature-img {
+min-height:340px;
+background:url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1200&q=85') center/cover;
+}
+
+.feature-copy {
+padding:42px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.feature-copy h2 {
+font:800 48px/.95 'Barlow Condensed';
+margin:12px 0;
+text-transform:uppercase;
+}
+
+.feature-copy p {
+color:var(--muted);
+line-height:1.8;
+font-size:13px;
+}
+
+#profile {
+display:none;
+margin:60px 0;
+background:#111;
+border:1px solid var(--gold);
+scroll-margin-top:95px;
+}
+
+.profile-hero {
+padding:42px 5%;
+min-height:260px;
+background:
+linear-gradient(90deg,#080808 0%,#080808d9 50%,#08080870),
+url('https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1600&q=85') center/cover;
+display:flex;
+align-items:end;
+gap:22px;
+}
+
+.profile-crest {
+width:76px;
+height:76px;
+border:1px solid var(--gold);
+display:grid;
+place-items:center;
+color:var(--gold);
+font:800 38px 'Barlow Condensed';
+background:#090909;
+}
+
+.profile-hero h2 {
+font:900 clamp(44px,7vw,76px)/.85 'Barlow Condensed';
+margin:0;
+text-transform:uppercase;
+}
+
+.profile-hero p {
+color:var(--gold);
+font-size:10px;
+letter-spacing:2px;
+text-transform:uppercase;
+}
+
+.profile-body { padding:25px 5% 40px; }
+
+.tabs {
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+border-bottom:1px solid var(--line);
+padding-bottom:15px;
+}
+
+.tab {
+background:transparent;
+color:#aaa;
+border:1px solid var(--line);
+padding:10px 16px;
+font-size:10px;
+letter-spacing:1.5px;
+}
+
+.tab.active,
+.tab:hover {
+color:#111;
+background:var(--gold);
+border-color:var(--gold);
+}
+
+.tab-content {
+padding:24px 0;
+color:#d8d1c5;
+font-size:13px;
+line-height:1.9;
+max-width:900px;
+}
+
+.facts {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:20px 0;
+}
+
+.fact {
+background:#1b1a17;
+padding:15px;
+border:1px solid var(--line);
+}
+
+.fact small {
+display:block;
+color:var(--gold);
+font-size:9px;
+text-transform:uppercase;
+letter-spacing:1.5px;
+}
+
+.fact b {
+display:block;
+margin-top:6px;
+font-size:13px;
+}
+
+.timeline {
+border-left:1px solid var(--gold);
+margin:20px 0 10px 8px;
+padding-left:23px;
+}
+
+.moment {
+margin:0 0 20px;
+position:relative;
+}
+
+.moment:before {
+content:"";
+position:absolute;
+left:-28px;
+top:5px;
+width:9px;
+height:9px;
+border-radius:50%;
+background:var(--gold);
+}
+
+.moment b {
+color:var(--gold);
+font:700 22px 'Barlow Condensed';
+}
+
+.moment p { margin:3px 0; }
+
+.pitch {
+max-width:650px;
+margin:22px auto;
+padding:20px;
+border:2px solid #c4cda6;
+background:repeating-linear-gradient(0deg,#24543c,#24543c 65px,#2c6045 65px,#2c6045 130px);
+border-radius:4px;
+position:relative;
+}
+
+.pitch:before {
+content:"";
+position:absolute;
+top:50%;
+left:0;
+right:0;
+border-top:1px solid #d6e0bd;
+}
+
+.pitch:after {
+content:"";
+position:absolute;
+width:100px;
+height:100px;
+border:1px solid #d6e0bd;
+border-radius:50%;
+top:calc(50% - 50px);
+left:calc(50% - 50px);
+}
+
+.rows {
+position:relative;
+z-index:1;
+display:flex;
+flex-direction:column;
+gap:22px;
+}
+
+.rowplayers {
+display:flex;
+justify-content:space-around;
+gap:6px;
+}
+
+.player {
+text-align:center;
+color:white;
+font-size:9px;
+text-shadow:0 1px 3px #000;
+min-width:48px;
+}
+
+.player i {
+font-style:normal;
+display:grid;
+place-items:center;
+margin:0 auto 5px;
+width:27px;
+height:27px;
+border-radius:50%;
+background:#f2dfaa;
+color:#17130c;
+font-weight:900;
+text-shadow:none;
+}
+
+footer {
+border-top:1px solid var(--line);
+margin-top:80px;
+padding:35px 5.5%;
+display:flex;
+justify-content:space-between;
+gap:20px;
+flex-wrap:wrap;
+color:var(--muted);
+font-size:10px;
+letter-spacing:1px;
+}
+
+@media(max-width:900px) {
+.club-grid { grid-template-columns:repeat(2,1fr); }
+.league-strip { grid-template-columns:repeat(3,1fr); }
+.feature { grid-template-columns:1fr; }
+.feature-img { min-height:230px; }
+}
+
+@media(max-width:600px) {
+header { height:65px; }
+.menu { display:block; }
+
+nav {
+display:none;
+position:absolute;
+top:65px;
+left:0;
+right:0;
+padding:20px 6%;
+background:#090909;
+flex-direction:column;
+border-bottom:1px solid var(--line);
+}
+
+nav.open { display:flex; }
+
+.hero {
+min-height:520px;
+padding:65px 7%;
+}
+
+.league-strip { grid-template-columns:repeat(2,1fr); }
+.club-grid { grid-template-columns:1fr 1fr; gap:8px; }
+.club-card { min-height:235px; }
+.club-photo { height:115px; }
+.club-info { padding:12px; }
+.club-info h3 { font-size:19px; }
+.feature-copy { padding:25px; }
+.facts { grid-template-columns:repeat(2,1fr); }
+.profile-hero { padding:25px 5%; min-height:210px; }
+.profile-crest { width:55px; height:55px; font-size:28px; }
+.rowplayers { gap:1px; }
+.player { font-size:8px; min-width:40px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<a class="logo" href="#">THE FOOTBALL <em>ATLAS</em></a>
+<button class="menu" onclick="document.querySelector('nav').classList.toggle('open')">MENU</button>
+<nav>
+<a href="#leagues">Leagues</a>
+<a href="#clubs">Clubs</a>
+<a href="#profile">Club profiles</a>
+<a href="#story">The archive</a>
+</nav>
+</header>
+
+<section class="hero">
+<div class="hero-inner">
+<div class="kicker">A living archive of the beautiful game</div>
+<h1>THE WORLD<br>OF <span>FOOTBALL.</span></h1>
+<p>Discover the institutions, rivalries and legends that shaped the game. Explore the history of the world's great clubs, the leagues they compete in and the players who made them unforgettable.</p>
+<a class="goldbtn" href="#leagues">Explore the archive ↗</a>
+</div>
+</section>
+
+<div class="ticker">
+<span>CLUBS & CULTURE</span>
+<span>—</span>
+<span>LEAGUES & LEGACIES</span>
+<span>—</span>
+<span>PLAYERS & LINEUPS</span>
+<span>—</span>
+<span>FOOTBALL HISTORY</span>
+</div>
+
+<main>
+<section class="section" id="leagues">
+<div class="section-head">
+<div>
+<div class="kicker">01 / COMPETITIONS</div>
+<h2>Explore the leagues</h2>
+</div>
+<p>Choose a competition to filter its clubs. Every league has its own story, identity and unforgettable chapters.</p>
+</div>
+<div class="league-strip" id="leagueList"></div>
+</section>
+
+<section class="section" id="clubs">
+<div class="section-head">
+<div>
+<div class="kicker">02 / THE CLUB DIRECTORY</div>
+<h2>Great clubs. Great stories.</h2>
+</div>
+<p>Open a club profile to explore its origins, milestones, honours and tactical lineup.</p>
+</div>
+<div class="controls">
+<input class="search" id="search" placeholder="Search club, country or league..." oninput="renderClubs()">
+<button class="filter" onclick="selectLeague('All')">Show all clubs</button>
+</div>
+<div class="club-grid" id="clubGrid"></div>
+</section>
+
+<section class="feature" id="story">
+<div class="feature-img"></div>
+<div class="feature-copy">
+<div class="kicker">THE GAME IS MORE THAN 90 MINUTES</div>
+<h2>Every badge tells a story.</h2>
+<p>From local beginnings to nights under the brightest lights, football clubs carry the memories of generations. This archive brings those stories together in one place.</p>
+<a href="#clubs" class="goldbtn" style="width:max-content">Discover the clubs ↗</a>
+</div>
+</section>
+
+<section id="profile">
+<div class="profile-hero">
+<div class="profile-crest" id="pcrest">FC</div>
+<div>
+<h2 id="pname">Club name</h2>
+<p id="pmeta">Country · Competition</p>
+</div>
+</div>
+
+<div class="profile-body">
+<div class="facts" id="facts"></div>
+
+<div class="tabs">
+<button class="tab active" onclick="showTab('history',this)">THE STORY</button>
+<button class="tab" onclick="showTab('timeline',this)">TIMELINE</button>
+<button class="tab" onclick="showTab('honours',this)">HONOURS</button>
+<button class="tab" onclick="showTab('lineup',this)">TACTICAL LINEUP</button>
+</div>
+
+<div class="tab-content" id="tabContent"></div>
+</div>
+</section>
+</main>
+
+<footer>
+<span>THE FOOTBALL ATLAS © 2026</span>
+<span>BUILT FOR THE LOVE OF THE GAME</span>
+<span>HISTORY · CULTURE · FOOTBALL</span>
+  </footer>
+<script>
+const leagues = [
+  {name:"Premier League", short:"ENG", country:"England", count:"20 Clubs"},
+  {name:"La Liga", short:"ESP", country:"Spain", count:"20 Clubs"},
+  {name:"Serie A", short:"ITA", country:"Italy", count:"20 Clubs"},
+  {name:"Bundesliga", short:"GER", country:"Germany", count:"18 Clubs"},
+  {name:"Ligue 1", short:"FRA", country:"France", count:"18 Clubs"},
+  {name:"Saudi Pro League", short:"KSA", country:"Saudi Arabia", count:"18 Clubs"},
+  {name:"Eredivisie", short:"NED", country:"Netherlands", count:"18 Clubs"},
+  {name:"Primeira Liga", short:"POR", country:"Portugal", count:"18 Clubs"}
+];
+
+const clubs = [
+{
+name:"Manchester United", short:"MU", league:"Premier League", country:"England",
+founded:"1878", stadium:"Old Trafford", capacity:"74,310",
+manager:"Check current squad", nickname:"The Red Devils",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Founded in 1878 as Newton Heath, Manchester United became one of the most recognised football clubs in the world. The club changed its name to Manchester United in 1902 and moved to Old Trafford in 1910. Its history includes major domestic and European successes, memorable teams and generations of celebrated players.",
+timeline:[
+["1878","Founded as Newton Heath."],
+["1902","The club became Manchester United."],
+["1910","Old Trafford became the club's home."],
+["1968","Won the European Cup."],
+["1999","Completed a historic European treble."]
+],
+honours:["English league titles","FA Cups","League Cups","European Cups"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Defensive Midfielder","Central Midfielder","Central Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Liverpool", short:"LFC", league:"Premier League", country:"England",
+founded:"1892", stadium:"Anfield", capacity:"61,276",
+manager:"Check current squad", nickname:"The Reds",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Liverpool Football Club was founded in 1892 and has built a remarkable history at Anfield. Famous for its European nights, passionate supporters and attacking football, Liverpool has enjoyed success in English and European competitions.",
+timeline:[
+["1892","Liverpool FC was founded."],
+["1901","Won the first league championship."],
+["1977","Won the European Cup for the first time."],
+["2005","Won a famous Champions League final."],
+["2019","Won the Champions League again."]
+],
+honours:["English league titles","FA Cups","League Cups","European Cups"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Arsenal", short:"AFC", league:"Premier League", country:"England",
+founded:"1886", stadium:"Emirates Stadium", capacity:"60,704",
+manager:"Check current squad", nickname:"The Gunners",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Arsenal began in 1886 as Dial Square in Woolwich. The club later moved to north London and became known for its historic league achievements, famous teams and attractive football.",
+timeline:[
+["1886","Founded as Dial Square."],
+["1913","Moved to north London."],
+["1930","Won the first FA Cup."],
+["2003–04","Completed an unbeaten league season."]
+],
+honours:["English league titles","FA Cups","Community Shields"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Chelsea", short:"CFC", league:"Premier League", country:"England",
+founded:"1905", stadium:"Stamford Bridge", capacity:"40,341",
+manager:"Check current squad", nickname:"The Blues",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Chelsea was founded in 1905 and has played at Stamford Bridge since its beginning. The club has won major English trophies and European competitions.",
+timeline:[
+["1905","Chelsea FC was founded."],
+["1955","Won its first league championship."],
+["2012","Won the Champions League."],
+["2021","Won another Champions League title."]
+],
+honours:["English league titles","FA Cups","European Cups","Europa League titles"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Manchester City", short:"MC", league:"Premier League", country:"England",
+founded:"1880", stadium:"Etihad Stadium", capacity:"53,400",
+manager:"Check current squad", nickname:"The Cityzens",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Manchester City traces its origins to 1880. The club has grown into a major force in English and European football, with a particularly successful modern era.",
+timeline:[
+["1880","Founded as St. Mark's."],
+["1894","Became Manchester City."],
+["2012","Won a dramatic league title."],
+["2023","Won the Champions League and completed a historic treble."]
+],
+honours:["English league titles","FA Cups","League Cups","Champions League"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Tottenham Hotspur", short:"TH", league:"Premier League", country:"England",
+founded:"1882", stadium:"Tottenham Hotspur Stadium", capacity:"62,850",
+manager:"Check current squad", nickname:"Spurs",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Tottenham Hotspur was founded in 1882. The north London club has a long tradition of attacking football and has won domestic and European honours.",
+timeline:[
+["1882","Founded by schoolboys."],
+["1901","Won the FA Cup as a non-league club."],
+["1963","Won the European Cup Winners' Cup."],
+["2019","Reached the Champions League final."]
+],
+honours:["English league titles","FA Cups","League Cups","European trophies"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Real Madrid", short:"RMA", league:"La Liga", country:"Spain",
+founded:"1902", stadium:"Santiago Bernabéu", capacity:"78,297",
+manager:"Check current squad", nickname:"Los Blancos",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Real Madrid was founded in 1902. The club became one of football's most successful institutions, particularly in European competition. Its history includes legendary teams and players from different generations.",
+timeline:[
+["1902","Madrid Football Club was founded."],
+["1956","Won the first European Cup."],
+["2002","Celebrated a century of the club."],
+["2014","Won La Décima."],
+["2024","Won another Champions League title."]
+],
+honours:["La Liga titles","Copa del Rey","Champions League titles","Club World Cup titles"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Barcelona", short:"FCB", league:"La Liga", country:"Spain",
+founded:"1899", stadium:"Spotify Camp Nou", capacity:"Check current capacity",
+manager:"Check current squad", nickname:"Blaugrana",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"FC Barcelona was founded in 1899. The club is known for its distinctive football identity, La Masia academy and historic rivalry with Real Madrid.",
+timeline:[
+["1899","Founded by a group led by Joan Gamper."],
+["1957","Camp Nou opened."],
+["2009","Won six major trophies in one calendar year."],
+["2015","Won another continental treble."]
+],
+honours:["La Liga titles","Copa del Rey","Champions League titles","Club World Cup titles"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Atlético Madrid", short:"ATM", league:"La Liga", country:"Spain",
+founded:"1903", stadium:"Metropolitano", capacity:"70,460",
+manager:"Check current squad", nickname:"Los Colchoneros",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Atlético Madrid was founded in 1903. The club is known for its determined playing style, passionate supporters and strong rivalry with Real Madrid.",
+timeline:[
+["1903","Founded in Madrid."],
+["1962","Won the European Cup Winners' Cup."],
+["2014","Won La Liga."],
+["2018","Won the Europa League."]
+],
+honours:["La Liga titles","Copa del Rey","Europa League titles","European Super Cup"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Juventus", short:"JUV", league:"Serie A", country:"Italy",
+founded:"1897", stadium:"Allianz Stadium", capacity:"41,507",
+manager:"Check current squad", nickname:"The Old Lady",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Juventus was founded in Turin in 1897. It is one of Italy's most historic clubs, with a long record of domestic success and a significant European history.",
+timeline:[
+["1897","Juventus was founded."],
+["1905","Won its first Italian championship."],
+["1985","Won the European Cup."],
+["1996","Won another Champions League title."]
+],
+honours:["Serie A titles","Coppa Italia","Champions League titles","UEFA Cup"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"AC Milan", short:"ACM", league:"Serie A", country:"Italy",
+founded:"1899", stadium:"San Siro", capacity:"75,817",
+manager:"Check current squad", nickname:"Rossoneri",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"AC Milan was founded in 1899. The club has a rich European history and has featured some of the most celebrated defenders, midfielders and forwards in football.",
+timeline:[
+["1899","AC Milan was founded."],
+["1963","Won the first European Cup."],
+["1989","Won a famous European title."],
+["2007","Won the Champions League."]
+],
+honours:["Serie A titles","Coppa Italia","Champions League titles","UEFA Super Cup"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Inter Milan", short:"INT", league:"Serie A", country:"Italy",
+founded:"1908", stadium:"San Siro", capacity:"75,817",
+manager:"Check current squad", nickname:"Nerazzurri",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Inter Milan was founded in 1908. The club has won numerous Italian and European honours and is known for its historic rivalry with AC Milan.",
+timeline:[
+["1908","Internazionale was founded."],
+["1964","Won the European Cup."],
+["2010","Won the treble."],
+["2023","Reached the Champions League final."]
+],
+honours:["Serie A titles","Coppa Italia","Champions League titles","UEFA Cup"],
+lineup:["Goalkeeper","Right Wing Back","Centre Back","Centre Back","Centre Back","Left Wing Back","Midfielder","Midfielder","Midfielder","Forward","Forward"]
+},
+{
+name:"Bayern Munich", short:"FCB", league:"Bundesliga", country:"Germany",
+founded:"1900", stadium:"Allianz Arena", capacity:"75,000",
+manager:"Check current squad", nickname:"Die Roten",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Bayern Munich was founded in 1900. It became Germany's most successful football club and a major force in European football.",
+timeline:[
+["1900","Bayern Munich was founded."],
+["1974","Won the first of three consecutive European Cups."],
+["2013","Won the continental treble."],
+["2020","Won another Champions League title."]
+],
+honours:["Bundesliga titles","DFB-Pokal","Champions League titles","Club World Cup titles"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Borussia Dortmund", short:"BVB", league:"Bundesliga", country:"Germany",
+founded:"1909", stadium:"Signal Iduna Park", capacity:"81,365",
+manager:"Check current squad", nickname:"Die Schwarzgelben",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Borussia Dortmund was founded in 1909. The club is famous for its passionate supporters, the Yellow Wall and its strong football culture.",
+timeline:[
+["1909","Founded in Dortmund."],
+["1966","Won the European Cup Winners' Cup."],
+["1997","Won the Champions League."],
+["2013","Reached the Champions League final."]
+],
+honours:["Bundesliga titles","DFB-Pokal","Champions League","Intercontinental Cup"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Paris Saint-Germain", short:"PSG", league:"Ligue 1", country:"France",
+founded:"1970", stadium:"Parc des Princes", capacity:"48,583",
+manager:"Check current squad", nickname:"Les Parisiens",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Paris Saint-Germain was founded in 1970. The Paris club became a major force in French football and has attracted many internationally recognised players.",
+timeline:[
+["1970","Paris Saint-Germain was founded."],
+["1982","Won its first major French cup."],
+["1996","Won the UEFA Cup Winners' Cup."],
+["2025","Won its first Champions League title."]
+],
+honours:["Ligue 1 titles","Coupe de France","Champions League","French Super Cups"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Ajax", short:"AFC", league:"Eredivisie", country:"Netherlands",
+founded:"1900", stadium:"Johan Cruyff Arena", capacity:"55,865",
+manager:"Check current squad", nickname:"De Godenzonen",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Ajax was founded in Amsterdam in 1900. The club is known for its youth academy, technical football and major European achievements.",
+timeline:[
+["1900","Ajax was founded."],
+["1971","Won the first of three consecutive European Cups."],
+["1995","Won the Champions League."],
+["2019","Reached the Champions League semi-finals."]
+],
+honours:["Eredivisie titles","KNVB Cups","Champions League titles","Intercontinental Cup"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Benfica", short:"SLB", league:"Primeira Liga", country:"Portugal",
+founded:"1904", stadium:"Estádio da Luz", capacity:"64,642",
+manager:"Check current squad", nickname:"As Águias",
+image:"https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=900&q=85",
+history:"Benfica was founded in Lisbon in 1904. It is one of Portugal's most successful clubs and enjoyed major European success during the 1960s.",
+timeline:[
+["1904","Benfica was founded."],
+["1961","Won the European Cup."],
+["1962","Retained the European Cup."],
+["2014","Reached the Europa League final."]
+],
+honours:["Primeira Liga titles","Taça de Portugal","European Cups","League Cups"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+},
+{
+name:"Al Nassr", short:"NAS", league:"Saudi Pro League", country:"Saudi Arabia",
+founded:"1955", stadium:"Al-Awwal Park", capacity:"25,000",
+manager:"Check current squad", nickname:"The Global One",
+image:"https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=900&q=85",
+history:"Al Nassr was founded in Riyadh in 1955. The club has a major following in Saudi Arabia and has won domestic and regional competitions.",
+timeline:[
+["1955","Al Nassr was founded."],
+["1976","Won its first league championship."],
+["1998","Won the Asian Cup Winners' Cup."],
+["2023","Cristiano Ronaldo joined the club."]
+],
+honours:["Saudi Pro League titles","King's Cups","Regional trophies"],
+lineup:["Goalkeeper","Right Back","Centre Back","Centre Back","Left Back","Midfielder","Midfielder","Midfielder","Right Winger","Striker","Left Winger"]
+}
+];
+
+let activeLeague = "All";
+let currentClub = null;
+
+function renderLeagues() {
+  const container = document.getElementById("leagueList");
+  container.innerHTML = `
+    <button class="league active" onclick="selectLeague('All')">
+      <small>ALL COMPETITIONS</small>
+      <strong>All clubs</strong>
+      <span>${clubs.length} featured clubs</span>
+    </button>
+  `;
+
+  leagues.forEach(league => {
+    container.innerHTML += `
+      <button class="league" onclick="selectLeague('${league.name}')">
+        <small>${league.short} / ${league.country}</small>
+        <strong>${league.name}</strong>
+        <span>${league.count}</span>
+      </button>
+    `;
+  });
+}
+
+function selectLeague(name) {
+  activeLeague = name;
+
+  document.querySelectorAll(".league").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  renderClubs();
+
+  document.getElementById("clubs").scrollIntoView({
+    behavior:"smooth"
+  });
+}
+
+function renderClubs() {
+  const search = document.getElementById("search").value.toLowerCase();
+
+  const filtered = clubs.filter(club => {
+    const matchesLeague =
+      activeLeague === "All" || club.league === activeLeague;
+
+    const matchesSearch =
+      club.name.toLowerCase().includes(search) ||
+      club.country.toLowerCase().includes(search) ||
+      club.league.toLowerCase().includes(search);
+
+    return matchesLeague && matchesSearch;
+  });
+
+  const grid = document.getElementById("clubGrid");
+
+  if (!filtered.length) {
+    grid.innerHTML = `
+      <p style="color:#aaa;grid-column:1/-1">
+        No clubs found. Try another search.
+      </p>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(club => `
+    <button class="club-card" onclick="openClub('${club.short}')">
+      <div class="club-photo"
+        style="background-image:url('${club.image}')">
+      </div>
+      <div class="club-info">
+        <div class="crest">${club.short}</div>
+        <small>${club.country} · ${club.league}</small>
+        <h3>${club.name}</h3>
+        <p>EST. ${club.founded} · EXPLORE CLUB ↗</p>
+      </div>
+    </button>
+  `).join("");
+}
+
+function openClub(short) {
+  const club = clubs.find(item => item.short === short);
+  if (!club) return;
+
+  currentClub = club;
+
+  document.getElementById("profile").style.display = "block";
+  document.getElementById("pcrest").textContent = club.short;
+  document.getElementById("pname").textContent = club.name;
+  document.getElementById("pmeta").textContent =
+    club.country + " · " + club.league;
+
+  document.getElementById("facts").innerHTML = `
+    <div class="fact"><small>Founded</small><b>${club.founded}</b></div>
+    <div class="fact"><small>Home ground</small><b>${club.stadium}</b></div>
+    <div class="fact"><small>Capacity</small><b>${club.capacity}</b></div>
+    <div class="fact"><small>Nickname</small><b>${club.nickname}</b></div>
+  `;
+
+  const firstTab = document.querySelector(".tab");
+  showTab("history", firstTab);
+
+  document.getElementById("profile").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+function showTab(tab, button) {
+  if (!currentClub) return;
+
+  document.querySelectorAll(".tab").forEach(item => {
+      item.classList.remove("active");
+  });
+
+  if (button) button.classList.add("active");
+
+  const content = document.getElementById("tabContent");
+  const club = currentClub;
+
+  if (tab === "history") {
+    content.innerHTML = `
+      <div class="kicker">THE CLUB STORY</div>
+      <h2 style="font:700 32px 'Barlow Condensed';color:#d8b56d">
+        THE HISTORY OF ${club.name.toUpperCase()}
+      </h2>
+      <p>${club.history}</p>
+      <p><b>Home stadium:</b> ${club.stadium}</p>
+      <p><b>Nickname:</b> ${club.nickname}</p>
+      <p><b>Founded:</b> ${club.founded}</p>
+    `;
+  }
+
+  if (tab === "timeline") {
+    content.innerHTML = `
+      <div class="kicker">IMPORTANT MOMENTS</div>
+      <div class="timeline">
+        ${club.timeline.map(item => `
+          <div class="moment">
+            <b>${item[0]}</b>
+            <p>${item[1]}</p>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  if (tab === "honours") {
+    content.innerHTML = `
+      <div class="kicker">THE TROPHY CABINET</div>
+      <h2 style="font:700 32px 'Barlow Condensed';color:#d8b56d">
+        CLUB HONOURS
+      </h2>
+      <div class="facts">
+        ${club.honours.map(trophy => `
+          <div class="fact">
+            <small>HONOUR</small>
+            <b>${trophy}</b>
+          </div>
+        `).join("")}
+      </div>
+      <p style="color:#aaa">
+        This is a category overview, not a complete verified trophy count.
+      </p>
+    `;
+  }
+
+  if (tab === "lineup") {
+    const players = club.lineup;
+
+    content.innerHTML = `
+      <div class="kicker">TACTICAL VIEW</div>
+      <h2 style="font:700 32px 'Barlow Condensed';color:#d8b56d">
+        ILLUSTRATIVE 4-3-3 FORMATION
+      </h2>
+      <p>
+        This is a positional formation illustration, not the club's confirmed
+        current starting eleven.
+      </p>
+
+      <div class="pitch">
+        <div class="rows">
+          <div class="rowplayers">
+            ${players.slice(8,11).map(p => `
+              <div class="player"><i>●</i>${p}</div>
+            `).join("")}
+          </div>
+
+          <div class="rowplayers">
+            ${players.slice(5,8).map(p => `
+              <div class="player"><i>●</i>${p}</div>
+            `).join("")}
+          </div>
+
+          <div class="rowplayers">
+            ${players.slice(1,5).map(p => `
+              <div class="player"><i>●</i>${p}</div>
+            `).join("")}
+          </div>
+
+          <div class="rowplayers">
+            <div class="player"><i>●</i>${players[0]}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+renderLeagues();
+renderClubs();
+</script>
+
+</body>
+</html>
